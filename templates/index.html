@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <title>TandaAir</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mt-5">TandaAir.</h1>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="encode-tab" data-bs-toggle="tab" data-bs-target="#encode" type="button" role="tab" aria-controls="encode" aria-selected="true">Encode</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="decode-tab" data-bs-toggle="tab" data-bs-target="#decode" type="button" role="tab" aria-controls="decode" aria-selected="false">Decode</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false">Kelompok Kami</button>
+          </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="encode" role="tabpanel" aria-labelledby="encode-tab">
+          <form action="/encode" method="post" enctype="multipart/form-data" class="mt-3">
+            <div class="form-group">
+              <label for="image">Unggah Gambar:</label>
+              <input type="file" class="form-control" id="image" name="image" required>
+            </div>
+            <div class="form-group">
+              <label for="watermark">Watermark Text:</label>
+              <input type="text" class="form-control" id="watermark" name="watermark" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <a class="btn btn-secondary mt-3" href="/" role="button">Reset</a>
+          </form>
+          {% if embedded_image %}
+          <p>Panjang watermark dalam bits: {{ wm_length }}</p>
+          <h2 class="mt-5">Gambar mengandung watermark:</h2>
+          <img src="{{ embedded_image }}" alt="Watermarked Image" class="img-fluid">
+          {% endif %}
+        </div>
+        <div class="tab-pane fade" id="decode" role="tabpanel" aria-labelledby="decode-tab">
+            <div class="alert alert-danger mt-3" role="alert">
+                Setelah click tombol submit, halaman ini akan melakukan reload, sehingga buka kembali tab decode untuk melihat hasil extract watermarknya.
+                <br>
+                <br>
+                Jangan lupa untuk memasukkan panjang watermark dalam bits yang benar agar tidak keluar error!
+
+              </div>
+              
+          <form action="/decode" method="post" enctype="multipart/form-data" class="mt-3">
+            <div class="form-group">
+              <label for="encoded_image">Upload gambar mengandung watermark:</label>
+              <input type="file" class="form-control" id="encoded_image" name="encoded_image" required>
+            </div>
+            <div class="form-group">
+              <label for="wm_length">Panjang watermark dalam bits:</label>
+              <input type="number" class="form-control" id="wm_length" name="wm_length" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            <a class="btn btn-secondary mt-3" href="/" role="button">Reset</a>
+          </form>
+          {% if extracted_watermark %}
+          <h2 class="mt-5">Watermark yang di extract:</h2>
+          <p>{{ extracted_watermark }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="about" role="tabpanel" aria-labelledby="about-tab">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://simak.unsil.ac.id/us-unsil/foto/2022/227006155.jpg" class="card-img-top img-fluid" alt="Akhdan">
+                        <div class="card-body">
+                          <h5 class="card-title">Akhdan Rafif Nugraha</h5>
+                          <a href="https://frostlynn.github.io/" target="_blank" class="btn btn-primary">Find More!</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://simak.unsil.ac.id/us-unsil/foto/2022/227006157.jpg" class="card-img-top img-fluid" alt="agis">
+                        <div class="card-body">
+                          <h5 class="card-title">Agis Muhammad Nursyam</h5>
+                          <a href="https://agissmn.github.io/About-Agis/" target="_blank" class="btn btn-primary">Find More!</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://simak.unsil.ac.id/us-unsil/foto/2022/227006142.jpg" class="card-img-top img-fluid" alt="Ferry">
+                        <div class="card-body">
+                          <h5 class="card-title">Muhammad Ferry Hidayat</h5>
+                          <a href="https://muhammadferry.github.io/linktree-project/" target="_blank" class="btn btn-primary">Find More!</a>
+                        </div>
+                      </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
